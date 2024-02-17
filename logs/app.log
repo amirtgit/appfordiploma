@@ -1,0 +1,62 @@
+2024-01-17 16:18:25,382 INFO: App startup [in C:\Users\amirt\flask_environ\app\__init__.py:28]
+2024-02-10 17:11:19,723 INFO: App startup [in C:\Users\amirt\flask_environ\app\__init__.py:31]
+2024-02-10 17:11:31,836 ERROR: Exception on /user/susan [GET] [in C:\Users\amirt\flask_environ\.venv\lib\site-packages\flask\app.py:825]
+Traceback (most recent call last):
+  File "C:\Users\amirt\flask_environ\.venv\lib\site-packages\flask\app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\amirt\flask_environ\.venv\lib\site-packages\flask\app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\amirt\flask_environ\.venv\lib\site-packages\flask\app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\amirt\flask_environ\.venv\lib\site-packages\flask\app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "C:\Users\amirt\flask_environ\.venv\lib\site-packages\flask_login\utils.py", line 290, in decorated_view
+    return current_app.ensure_sync(func)(*args, **kwargs)
+  File "C:\Users\amirt\flask_environ\app\routes.py", line 86, in user
+    return render_template('user.html', user=user, posts=posts, next_url=next_url, prev_url=prev_url)
+  File "C:\Users\amirt\flask_environ\.venv\lib\site-packages\flask\templating.py", line 151, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "C:\Users\amirt\flask_environ\.venv\lib\site-packages\jinja2\environment.py", line 1081, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "C:\Users\amirt\flask_environ\.venv\lib\site-packages\jinja2\environment.py", line 1010, in get_template
+    return self._load_template(name, globals)
+  File "C:\Users\amirt\flask_environ\.venv\lib\site-packages\jinja2\environment.py", line 969, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "C:\Users\amirt\flask_environ\.venv\lib\site-packages\jinja2\loaders.py", line 126, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "C:\Users\amirt\flask_environ\.venv\lib\site-packages\flask\templating.py", line 65, in get_source
+    return self._get_source_fast(environment, template)
+  File "C:\Users\amirt\flask_environ\.venv\lib\site-packages\flask\templating.py", line 99, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: user.html
+2024-02-10 17:12:33,038 INFO: App startup [in C:\Users\amirt\flask_environ\app\__init__.py:31]
+2024-02-10 17:12:38,590 ERROR: Exception on /user/susan [GET] [in C:\Users\amirt\flask_environ\.venv\lib\site-packages\flask\app.py:825]
+Traceback (most recent call last):
+  File "C:\Users\amirt\flask_environ\.venv\lib\site-packages\flask\app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\amirt\flask_environ\.venv\lib\site-packages\flask\app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\amirt\flask_environ\.venv\lib\site-packages\flask\app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\amirt\flask_environ\.venv\lib\site-packages\flask\app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "C:\Users\amirt\flask_environ\.venv\lib\site-packages\flask_login\utils.py", line 290, in decorated_view
+    return current_app.ensure_sync(func)(*args, **kwargs)
+  File "C:\Users\amirt\flask_environ\app\routes.py", line 86, in user
+    return render_template('user.html', user=user, posts=posts, next_url=next_url, prev_url=prev_url)
+  File "C:\Users\amirt\flask_environ\.venv\lib\site-packages\flask\templating.py", line 151, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "C:\Users\amirt\flask_environ\.venv\lib\site-packages\jinja2\environment.py", line 1081, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "C:\Users\amirt\flask_environ\.venv\lib\site-packages\jinja2\environment.py", line 1010, in get_template
+    return self._load_template(name, globals)
+  File "C:\Users\amirt\flask_environ\.venv\lib\site-packages\jinja2\environment.py", line 969, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "C:\Users\amirt\flask_environ\.venv\lib\site-packages\jinja2\loaders.py", line 126, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "C:\Users\amirt\flask_environ\.venv\lib\site-packages\flask\templating.py", line 65, in get_source
+    return self._get_source_fast(environment, template)
+  File "C:\Users\amirt\flask_environ\.venv\lib\site-packages\flask\templating.py", line 99, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: user.html
+2024-02-10 18:38:12,896 INFO: App startup [in C:\Users\amirt\flask_environ\app\__init__.py:33]
