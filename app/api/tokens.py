@@ -3,14 +3,14 @@ from app.api import bp
 from app.api.auth import basic_auth, token_auth
 
 
-@bp.route('/tokens', methods=['POST'])
+@bp.route('/tokens', methods=['POST'])#IT IS LOGIN
 @basic_auth.login_required
 def get_token():
     token = basic_auth.current_user().get_token()
     db.session.commit()
     return {'token': token}
 
-@bp.route('/tokens', methods=['DELETE'])
+@bp.route('/tokens', methods=['DELETE'])#LOGOUT
 @token_auth.login_required
 def revoke_token():
     token_auth.current_user().revoke_token()

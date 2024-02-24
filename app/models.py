@@ -127,7 +127,7 @@ class User(PaginatedAPIMixin, UserMixin, db.Model):
     
     
 
-class Post(db.Model):
+class Post(PaginatedAPIMixin, db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     request: so.Mapped[str] = so.mapped_column(sa.String(256))
     response: so.Mapped[str] = so.mapped_column(sa.String(256), nullable=True)
@@ -141,6 +141,21 @@ class Post(db.Model):
 
     def __repr__(self):
         return '<Post {}>'.format(self.request)
+    
+    def to_dict(self):
+        data = {
+            'id': self.id,
+            'request': self.request,
+            'response': self.response,
+            'report_rating': self.report_rating,
+            'timestamp': self.timestamp.replace(
+                tzinfo=timezone.utc).isoformat(),
+            'user_id': self.user_id,
+            '_links': {
+                'self': url_for('api.get_post', id=self.id)
+            }
+        }
+        return data
     
 @login.user_loader
 def load_user(id):
