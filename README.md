@@ -1,4 +1,4 @@
-add     --branch branch_3    to download only this branch for cloning
+add     --branch branch_4    to download only this branch for cloning
 
 add .env and write an api key there as OPENAI_KEY variable
 
