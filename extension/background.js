@@ -1,3 +1,7 @@
+chrome.runtime.onInstalled.addListener(
+  
+)
+
 browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === 'login') {
       fetch('https://localhost:5000/api/users', {
