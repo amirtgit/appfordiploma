@@ -1,15 +1,17 @@
-add     --branch branch_4    to download only this branch for cloning
+Как установить:
 
-add .env and write an api key there as OPENAI_KEY variable
+ --branch branch_4    чтобы клонировать только эту ветку
 
-write    py -3 -m venv .venv   in cmd directory
+Создай файл .env в главной папке и добавь OPENAI_KEY=здесь ключ от openai api
 
-write   .venv\Scripts\activate   for environment, always run flask there
+py -3 -m venv .venv   чтобы создать среду разработки
 
-write   pip install -r requirements.txt
+ .venv\Scripts\activate   чтобы зайти в среду, входить в среду так всегда,  чтобы выйти из среды пишите deactivate   
+ 
+   pip install -r requirements.txt  чтобы установить все пакеты flask
 
-write   flask db upgrade
+ flask db upgrade установить базу данных на sqlite
 
-write   flask run
+  flask run   запуск приложения   выход через ctrl+c
 
-tests.py not working
+tests.py не трогать, можно просто удалить
