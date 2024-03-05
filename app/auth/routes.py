@@ -24,7 +24,7 @@ def login():
         if not next_page or urlsplit(next_page).netloc != '':
             next_page = url_for('main.index')
         return redirect(next_page)
-        #return redirect(url_for('index'))
+        
     return render_template('auth/login.html', title='Sign In', form=form)
 
 @bp.route('/register', methods=['GET', 'POST'])

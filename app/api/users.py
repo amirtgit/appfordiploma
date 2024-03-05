@@ -3,7 +3,7 @@ from app.models import User, Post
 from app import db
 import sqlalchemy as sa
 from flask import request, url_for, abort
-from app.api.errors import bad_request
+from app.api.errors import bad_request, error_response
 from app.api.auth import token_auth
 from app.ai import AdRating
 
@@ -97,3 +97,13 @@ def get_posts():
     per_page = min(request.args.get('per_page', 10, type=int), 100)
     return Post.to_collection_dict(sa.select(Post), page, per_page,
                                    'api.get_posts')
+
+@bp.route('/user/<string:username>', methods=['GET'])#dont mix up with /users/ не путать с /users/
+@token_auth.login_required
+def get_user_with_username(username):
+    user = db.session.scalar(sa.select(User).where(User.username == username))
+    #user = db.session.query(User).filter_by(username=username).one().to_dict()
+    if user is None:
+        abort(404,description=username)
+    return user.to_dict()
+    #return db.get_or_404(User, username).to_dict()
