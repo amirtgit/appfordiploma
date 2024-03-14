@@ -1,7 +1,16 @@
 document.getElementById('loginForm').addEventListener('submit', async function(event) {
   event.preventDefault();
-  const status= await chrome.storage.local.get(['userLoggedIn']);
-  if(status==true){
+  chrome.runtime.sendMessage({ type: "submitStarted" });
+  chrome.storage.session.get(null, function(data) {
+    if (chrome.runtime.lastError) {
+        console.error('Error retrieving data:', chrome.runtime.lastError.message);
+    } else {
+        console.log('Data stored in session storage:', data);
+    }
+  });
+
+  const status= await chrome.storage.session.get(['userLoggedIn']);
+  if(status.userLoggedIn==true){
     document.getElementById('loginMessage').textContent = 'Error: already logged In';
     return;
   };
@@ -20,37 +29,25 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
       if (response.ok) {
           const data = await response.json();
           console.log("Server response:", data);
-          await chrome.storage.local.set({accessToken: data.token, user: username, userLoggedIn: true})
-          console.log("Stored values:", await chrome.storage.local.get(['accessToken', 'user', 'userLoggedIn']));
-          //document.getElementById('loginMessage').textContent = 'Successful login.'+data.token;
-          //await chrome.storage.local.get(["accessToken"]).then((result) =>{document.getElementById('loginMessage').textContent='Successful login.'+result.accessToken});
-          //chrome.action.setPopup({popup: "index.html"});
-          chrome.tabs.update({url: "index.html"});
+          await chrome.storage.session.set({accessToken: data.token, user: username, userLoggedIn: true});
+          console.log("Stored values:", await chrome.storage.session.get(['accessToken', 'user', 'userLoggedIn']));
+
+          document.getElementById('loginMessage').textContent = 'Successful login.';
+          window.location.href =  "../index.html";
+          //chrome.tabs.update({url: "index.html"});
       } else {
           const data = await response.json();
           document.getElementById('loginMessage').textContent = data.error;
+          document.getElementById('loginMessage').style.color = 'red';
           document.querySelector('#username').placeholder = "Enter a username.";
           document.querySelector('#password').placeholder = "Enter a password.";
           document.querySelector('#username').style.backgroundColor = 'red';
           document.querySelector('#password').style.backgroundColor = 'red';
       }
   } catch (error) {
-      document.getElementById('loginMessage').textContent = 'Error: ' + error.message;
+      document.getElementById('errorMessage').textContent = 'Error: ' + error.message;
+      document.getElementById('errorMessage').style.color = 'red';
       console.error('Error:', error);
   }
+  chrome.runtime.sendMessage({ type: "submitCompleted" });
 });
-/*
-const loginForm = document.getElementById('loginForm');
-loginForm.addEventListener('submit', (event) => {
-  event.preventDefault();
-  const username = document.getElementById('username').value;
-  const password = document.getElementById('password').value;
-  chrome.runtime.sendMessage({ action: 'login', username, password }, (response) => {
-    if (response.success) {
-      // Handle successful login
-    } else {
-      // Display error message
-      document.getElementById('loginMessage').textContent = 'Invalid username or password.';
-    }
-  });
-});*/

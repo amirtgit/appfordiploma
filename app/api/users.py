@@ -2,10 +2,11 @@ from app.api import bp
 from app.models import User, Post
 from app import db
 import sqlalchemy as sa
-from flask import request, url_for, abort
+from flask import request, url_for, abort, jsonify
 from app.api.errors import bad_request, error_response
 from app.api.auth import token_auth
 from app.ai import AdRating
+from flask_cors import CORS
 
 @bp.route('/users/<int:id>', methods=['GET'])
 @token_auth.login_required
@@ -60,17 +61,6 @@ def update_user(id):
     db.session.commit()
     return user.to_dict()
 
-"""@bp.route('/login', methods=['POST'])
-def login():
-    data = request.get_json()
-    user = db.session.scalar(sa.select(User).where(User.username == data['username']))
-    if 'username' not in data or 'password' not in data:
-        return bad_request('must include username and password fields')
-    if user is None or not user.check_password(data['password']):
-        return bad_request('Invalid username or password')
-    login_user(user)
-    return user.to_dict(), 201, {'Location': url_for('api.get_user', id=user.id)}
-"""
 @bp.route('/make_post', methods=['POST'])
 @token_auth.login_required
 def make_post():
@@ -83,7 +73,6 @@ def make_post():
     db.session.add(post)
     db.session.commit()
     return post.to_dict(), 201, {'Location': url_for('api.get_post', id=post.id)}
-
 
 @bp.route('/posts/<int:id>', methods=['GET'])
 @token_auth.login_required
@@ -102,8 +91,21 @@ def get_posts():
 @token_auth.login_required
 def get_user_with_username(username):
     user = db.session.scalar(sa.select(User).where(User.username == username))
-    #user = db.session.query(User).filter_by(username=username).one().to_dict()
     if user is None:
         abort(404,description=username)
     return user.to_dict()
-    #return db.get_or_404(User, username).to_dict()
+
+@bp.route('/post/<string:username>', methods=['GET'])#dont mix up with /posts/ не путать с /posts/
+@token_auth.login_required
+def get_posts_with_username(username):
+    user = db.session.scalar(sa.select(User).where(User.username == username))
+    if user is None:
+        abort(404,description=username)
+    if token_auth.current_user().id != user.id:
+        abort(403)
+    page = request.args.get('page', 1, type=int)
+    per_page = min(request.args.get('per_page', 10, type=int), 100)
+    posts_query = sa.select(Post).filter_by(user_id=user.id)
+    if posts_query is None:
+        abort(404,description=username)
+    return Post.to_collection_dict(posts_query, page, per_page, 'api.get_posts')

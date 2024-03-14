@@ -16,9 +16,3 @@ def revoke_token():
     token_auth.current_user().revoke_token()
     db.session.commit()
     return '', 204
-
-#@bp.route('/validate_token', methods=['GET'])#
-#@token_auth.login_required
-#def validate_token():
-    #token_auth
-   # return
