@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
                 if (data.items.length > 0) {
                     // Clear any existing content within the list container
                     listContainer.innerHTML = '';
+                    data.items.reverse();
                   
                     // Iterate through the data and create post structures
                     for (const item of data.items) {
@@ -34,10 +35,23 @@ document.addEventListener('DOMContentLoaded', async function(event) {
                       // Create separate elements for each data point
                       const requestElement = document.createElement('h4');
                       requestElement.textContent = `Request: ${item.request}`;
-                      const ratingElement = document.createElement('h5');
-                      ratingElement.textContent = `${item.report_rating}`;
+                      const ratingElement = document.createElement('h3');
+                      ratingElement.textContent = `Rating ${item.report_rating}/10`;
+                      ratingElement.style.color = "blue";
                       const responseElement = document.createElement('p');
-                      responseElement.textContent = `Response: ${item.response}`;
+                      responseElement.textContent = `${item.response}`;
+                      responseElement.classList.add('collapse');
+                      responseElement.id = `collapse${item.id}`;
+
+                      //BUTTON to collapse
+                      const collapseButton = document.createElement('button');
+                      collapseButton.classList.add('button', 'is-primary');
+                      collapseButton.setAttribute("type", "button");
+                      collapseButton.setAttribute('data-bs-toggle', 'collapse');
+                      collapseButton.setAttribute('data-bs-target', `#collapse${item.id}`); // id of item needed
+                      collapseButton.setAttribute('aria-expanded', 'false');
+                      collapseButton.setAttribute('aria-controls', `collapse${item.id}`);
+                      collapseButton.textContent = 'Response';
 
                       const divRateResponse = document.createElement('div');
                       divRateResponse.classList.add('media');
@@ -49,6 +63,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
                       // Append data elements to the post structure
                       post.appendChild(requestElement);
                       divRate.appendChild(ratingElement);
+                      divResponse.appendChild(collapseButton);
                       divResponse.appendChild(responseElement);
                       divRateResponse.appendChild(divRate);
                       divRateResponse.appendChild(divResponse);
