@@ -17,7 +17,8 @@
   ],
   "background": {
     "service_worker": "background.js",
-    "type": "module"
+    "type": "module",
+    "persistent": false
   },
   "action": {
     "default_popup": "popup.html"

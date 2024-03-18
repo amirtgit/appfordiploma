@@ -16,7 +16,6 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
 });
 
 chrome.runtime.onInstalled.addListener(() => {
-  console.log('turd');
   chrome.storage.session.get(null, function(data) {
     if (chrome.runtime.lastError) {
         console.error('Error retrieving data:', chrome.runtime.lastError.message);
@@ -27,19 +26,3 @@ chrome.runtime.onInstalled.addListener(() => {
   //console.log(chrome.storage.session.get(['userLoggedIn']));
   //console.log(chrome.storage.session.get(['user']));
 });
-/*
-chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
-  if (message.type === "submitStarted") {
-    // Show progress bar
-    chrome.scripting.executeScript({
-      files: ['content_script.js']
-    });
-  } else if (message.type === "submitCompleted") {
-    // Hide progress bar
-    chrome.scripting.executeScript({
-      func: () => {
-        document.getElementById('errorMessage').classList.remove('progress is-small is-primary');
-      }
-    });
-  }
-});*/
